@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ToastController } from 'ionic-angular';
 
+
+declare var google:any;
 
 @Component({
   selector: 'page-home',
@@ -11,10 +13,30 @@ import { ToastController } from 'ionic-angular';
 export class HomePage {
 
   scanSubscription;
+  map:any;
 
-  constructor(public navCtrl: NavController, private qrScanner: QRScanner, private toastCtrl: ToastController) {
+  @ViewChild('map') mapRef: ElementRef;
+  constructor(public navCtrl: NavController, 
+              private qrScanner: QRScanner, 
+              private toastCtrl: ToastController) {
 
   }
+
+  ionViewDidLoad(){
+    setTimeout(()=> { this.DisplayMap(); },100);
+  }
+
+  DisplayMap(){
+    const location = new google.maps.LatLng('-36.616840','-72.957581');
+    
+    const options = {
+      center:location,
+      zoom:10
+    };
+
+    const map = new google.maps.Map(this.mapRef.nativeElement,options);
+  }
+
 
   scan() {
     (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
@@ -39,6 +61,8 @@ export class HomePage {
         console.error('Error', e);
       });
   }
+
+ 
   
  
 }
