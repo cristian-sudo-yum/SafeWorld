@@ -2,6 +2,8 @@ import { Component , ViewChild  } from '@angular/core';
 import { IonicPage, NavController, Nav, App } from 'ionic-angular';
 import { RestStorage } from  '../../providers/rest/storage';
 
+import { HomePage } from '../home/home';
+
 @IonicPage()
 @Component({
   selector: 'page-menu',
@@ -10,9 +12,8 @@ import { RestStorage } from  '../../providers/rest/storage';
 export class MenuPage {
   @ViewChild(Nav) nav: Nav;
 
-  paginas = [];
+  pages: Array<{title: string, component: any}>;
   usuario = '';
-
 
   constructor(public navCtrl: NavController, public restStorage: RestStorage, private appCtrl: App) {
   }
@@ -22,13 +23,13 @@ export class MenuPage {
 
     if(this.restStorage.getStatus())
     {
-        this.paginas = [
-        { title: 'Home', page: 'HomePage', icon: 'home'}
+        this.pages = [
+        { title: 'Home', component: HomePage },
       ];
       this.openPage('Home');
     }else {
-        this.paginas = [
-        { title: 'Home', page: 'HomePage', icon: 'home'}
+        this.pages = [
+        { title: 'Home', component: HomePage },
       ];
       this.openPage('Home');
     }

@@ -10,7 +10,7 @@
 
   <ion-content>
     <ion-list>
-      <button ion-item detail-none block menuClose *ngFor="let p of paginas" (click)="openPage(p.paginas)">
+      <button ion-item detail-none block menuClose *ngFor="let p of pages" (click)="openPage(p.pages)">
       <ion-icon item-start [name]="p.icon"></ion-icon>
       {{p.title}}
     </ion-list>
