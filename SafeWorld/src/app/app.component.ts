@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Platform, App, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestStorage } from '../providers/rest/storage';
@@ -21,17 +21,27 @@ import { MapScanPage } from '../pages/map-scan/map-scan';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp
+{
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
-
-  constructor(public events: Events, public platform: Platform, public restStorage: RestStorage, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
-          this.pages = [
+  nombre = '';
+  logout = false;
+  pagein = [
+        { title: 'Home', component: HomePage },
+        { title: 'List', component: ListPage },
+        { title: '¡Comienza a reciclar!', component: ComienzaAReciclarPage },
+        { title: '¡Lo que debes saber para comenzar a plantar!', component: TipsParaPlantarPage },
+        { title: '¡Veamos un video educativo!', component: VideosEducativosPage },
+        { title: '¡Informate acerca de los residuos!', component: InfoResiduosPage },
+        { title: '¡Encuentra un contenedor de basura cerca!', component: EncuentraContenedorPage },
+        { title: '¡Canjea tu premio!', component: CanjeaPremioPage },
+        { title: 'Ajustes', component: AjustesPage }
+      ];
+  pageout = [
         { title: 'Home', component: HomePage },
         { title: 'List', component: ListPage },
         { title: '¡Comienza a reciclar!', component: ComienzaAReciclarPage },
@@ -45,9 +55,55 @@ export class MyApp {
         { title: 'RegistroPage', component: RegistroPage }
       ];
 
+  constructor(public events: Events, public platform: Platform, public restStorage: RestStorage, public statusBar: StatusBar, public splashScreen: SplashScreen, public appCtrl: App) {
+
+    this.events.subscribe ('userlogged', (() => {console.log ('evento recibido');
+      this.nombre = this.restStorage.getNombre();
+      console.log ("estatus actual: " + this.restStorage.getStatus());
+      if(this.restStorage.getStatus())
+      {
+        this.pages = [];
+        this.pages = this.pagein;
+        this.logout=true;
+        this.nav.setRoot(HomePage);
+      }
+      else
+      {
+        this.pages = [];
+        this.pages = this.pageout;
+        this.logout=false;
+      }
+    }));
+
+    if(!this.restStorage.getStatus())
+    {
+      this.pages = [];
+      this.pages = this.pageout;
+    }
+
+     this.initializeApp();
+
   }
 
-  initializeApp() {
+  openPage(page)
+  {
+    this.nav.setRoot(page.component);
+  }
+
+  logoutUser()
+  {
+    this.restStorage.deleteUser();
+    this.appCtrl.getRootNav().setRoot(HomePage);
+    this.events.publish('userlogged');
+  }
+
+  ionViewCanEnter()
+  {
+    return this.restStorage.getStatus()
+  }
+
+  initializeApp()
+  {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -56,9 +112,6 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+
+
 }
