@@ -1,4 +1,4 @@
-import { Component , ViewChild  } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav, App } from 'ionic-angular';
 import { RestStorage } from  '../../providers/rest/storage';
 
@@ -8,11 +8,11 @@ import { RestStorage } from  '../../providers/rest/storage';
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  @ViewChild(Nav) nav: Nav;
 
   paginas = [];
   usuario = '';
 
+  @ViewChild(Nav) nav: Nav;
 
   constructor(public navCtrl: NavController, public restStorage: RestStorage, private appCtrl: App) {
   }
