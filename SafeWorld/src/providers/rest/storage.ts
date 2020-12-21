@@ -15,11 +15,6 @@ export class RestStorage {
     this.status=true;
   }
 
-  getUser()
-  {
-    return(this.user)
-  }
-
   getStatus()
   {
     return this.status;
@@ -28,6 +23,5 @@ export class RestStorage {
   deleteUser()
   {
     this.user="";
-    this.status=false;
   }
 }
