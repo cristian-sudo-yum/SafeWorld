@@ -18,7 +18,6 @@ import { LoginPage } from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import { QRScanner } from '@ionic-native/qr-scanner';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';

@@ -3,13 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\environments",
     "\\src\\pages",
     "\\src\\pages\\login",
-    "\\src\\pages\\registro",
+    "\\src\\pages\\menu",
     "\\src\\providers",
     "\\src\\providers\\rest"
   ],
-  "SelectedNode": "\\src\\providers\\rest\\rest.ts",
+  "SelectedNode": "\\src\\pages\\menu\\menu.html",
   "PreviewInSolutionExplorer": false
 }
