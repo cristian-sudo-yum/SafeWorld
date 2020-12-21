@@ -3,6 +3,7 @@ import { NavController, NavParams} from 'ionic-angular';
 import { RestProvider } from  '../../providers/rest/rest';
 import { RestStorage } from  '../../providers/rest/storage';
 import { HomePage } from '../home/home'
+import { ToastController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 
 @Component({
@@ -15,7 +16,7 @@ export class LoginPage {
   contrasena:string;
   persona:any;
 
-  constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, public restStorage: RestStorage) {}
+  constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, public restStorage: RestStorage,  private toastCtrl: ToastController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -33,18 +34,35 @@ export class LoginPage {
     setTimeout( () => {
       if(this.persona.status == "success" && this.persona.mensaje != "NoData")
       {
-        console.log("Logueaste: " + this.persona.mensaje[0].usuario);
+        this.goToast("Bienvenido " + this.persona.mensaje[0].nombre)
         this.restStorage.setUser(this.persona.mensaje[0].usuario);
+        this.restStorage.setNombre(this.persona.mensaje[0].nombre);
         this.navCtrl.push(HomePage)
           .then(() => {
-             this.navCtrl.setRoot(HomePage);
-             this.navCtrl.popToRoot();
+            this.events.publish('userloggedin');
+            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.popToRoot();
         });
       }
       else
       {
-        console.log("No existes");
+        this.goToast("El usuario No existe o los datos fueron mal ingresados");
       }
     }, TIME_IN_MS);
   }
+
+  goToast(mensaje: string) {
+  let toast = this.toastCtrl.create({
+    message: mensaje,
+    duration: 3000,
+    position: 'bot'
+  });
+
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
+
+  toast.present();
+  }
+
 }
