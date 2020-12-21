@@ -40,5 +40,6 @@ export class RestStorage {
   {
     this.user="";
     this.nombre ="";
+    this.status=false;
   }
 }

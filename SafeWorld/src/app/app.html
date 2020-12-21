@@ -13,6 +13,7 @@
       </button>
     </ion-list>
       {{nombre}}
+      <button *ngIf="logout != false" ion-button (click)="logoutUser()">logout</button>
   </ion-content>
 
 </ion-menu>

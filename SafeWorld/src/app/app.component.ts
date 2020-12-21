@@ -28,6 +28,7 @@ export class MyApp
 
   pages: Array<{title: string, component: any}>;
   nombre = '';
+  logout = false;
   pagein = [
         { title: 'Home', component: HomePage },
         { title: 'List', component: ListPage },
@@ -55,17 +56,21 @@ export class MyApp
 
   constructor(public events: Events, public platform: Platform, public restStorage: RestStorage, public statusBar: StatusBar, public splashScreen: SplashScreen, public appCtrl: App) {
 
-    this.events.subscribe ('userloggedin', (() => {console.log ('evento recibido');
+    this.events.subscribe ('userlogged', (() => {console.log ('evento recibido');
       this.nombre = this.restStorage.getNombre();
+      console.log ("estatus actual: " + this.restStorage.getStatus());
       if(this.restStorage.getStatus())
       {
         this.pages = [];
         this.pages = this.pagein;
+        this.logout=true;
+        this.nav.setRoot(HomePage);
       }
       else
       {
         this.pages = [];
         this.pages = this.pageout;
+        this.logout=false;
       }
     }));
 
@@ -74,10 +79,8 @@ export class MyApp
       this.pages = [];
       this.pages = this.pageout;
     }
-     //this.pages = this.pageout;
+
      this.initializeApp();
-
-
 
   }
 
@@ -86,10 +89,11 @@ export class MyApp
     this.nav.setRoot(page.component);
   }
 
-  logout()
+  logoutUser()
   {
     this.restStorage.deleteUser();
-    this.appCtrl.getRootNav().setRoot(HomePage)
+    this.appCtrl.getRootNav().setRoot(HomePage);
+    this.events.publish('userlogged');
   }
 
   ionViewCanEnter()

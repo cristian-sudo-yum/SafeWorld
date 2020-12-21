@@ -39,7 +39,7 @@ export class LoginPage {
         this.restStorage.setNombre(this.persona.mensaje[0].nombre);
         this.navCtrl.push(HomePage)
           .then(() => {
-            this.events.publish('userloggedin');
+            this.events.publish('userlogged');
             this.navCtrl.setRoot(HomePage);
             this.navCtrl.popToRoot();
         });
