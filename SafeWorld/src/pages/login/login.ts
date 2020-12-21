@@ -36,9 +36,9 @@ export class LoginPage {
         console.log("Logueaste: " + this.persona.mensaje[0].usuario);
         this.restStorage.setUser(this.persona.mensaje[0].usuario);
         this.navCtrl.push(HomePage)
-          .then(() => {
-             this.navCtrl.setRoot(HomePage);
-             this.navCtrl.popToRoot();
+        .then(() => {
+          this.navCtrl.setRoot(HomePage);
+          this.navCtrl.popToRoot();
         });
       }
       else

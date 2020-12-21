@@ -16,6 +16,7 @@ import { TipsParaPlantarPage } from '../pages/tips-para-plantar/tips-para-planta
 import { VideosEducativosPage } from '../pages/videos-educativos/videos-educativos';
 import { LoginPage } from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
+import { MapScanPage } from '../pages/map-scan/map-scan';
 
 @Component({
   templateUrl: 'app.html'

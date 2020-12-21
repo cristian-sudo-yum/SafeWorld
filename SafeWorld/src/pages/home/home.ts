@@ -1,40 +1,91 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild ,OnInit} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ToastController } from 'ionic-angular';
 
 
-declare var google:any;
+declare var google;
+
+interface Marker {
+  position: {
+    lat: number,
+    lng: number,
+  };
+  title: string;
+}
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   scanSubscription;
   map:any;
 
-  @ViewChild('map') mapRef: ElementRef;
+  markers: Marker[] = [
+    {
+      position: {
+        lat: -36.8270795,
+        lng: -73.0502399,
+      },
+      title: 'Punto Limpio Plaza de la Independencia'
+    },
+    {
+      position: {
+        lat:  -36.828544,
+        lng:  -73.037242,
+      },
+      title: 'Punto Limpio Campanil'
+    },
+    {
+      position: {
+        lat: -36.833609,
+        lng:  -73.049553,
+      },
+      title: 'Punto Limpio Parque Ecuador'
+    }
+  ];
+
   constructor(public navCtrl: NavController, 
               private qrScanner: QRScanner, 
               private toastCtrl: ToastController) {
 
   }
 
-  ionViewDidLoad(){
-    setTimeout(()=> { this.DisplayMap(); },100);
+  ngOnInit(){
+    this.loadMap();
   }
 
-  DisplayMap(){
-    const location = new google.maps.LatLng('-36.616840','-72.957581');
-    
-    const options = {
-      center:location,
-      zoom:10
-    };
+  loadMap() {
+    // create a new map by passing HTMLElement
+    const mapEle: HTMLElement = document.getElementById('map');
+    // create LatLng object
+    const myLatLng = {lat: -36.8270795, lng: -73.0502399};
+    // create map
+    this.map = new google.maps.Map(mapEle, {
+      center: myLatLng,
+      zoom: 15
+    });
+  
+    google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      this.renderMarkers();
+      mapEle.classList.add('show-map');
+    });
+  }
 
-    const map = new google.maps.Map(this.mapRef.nativeElement,options);
+  renderMarkers() {
+    this.markers.forEach(marker => {
+      this.addMarker(marker);
+    });
+  }
+
+  addMarker(marker: Marker) {
+    return new google.maps.Marker({
+      position: marker.position,
+      map: this.map,
+      title: marker.title
+    });
   }
 
 

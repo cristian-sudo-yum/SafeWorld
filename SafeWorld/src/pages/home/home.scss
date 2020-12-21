@@ -7,6 +7,12 @@ page-home {
 }
 
 #map {
-  height: 100%;
+  width: 50%;
+  height: 50%;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+  display: block;
+  &.show-map{
+    opacity: 1;
 }
-
+}

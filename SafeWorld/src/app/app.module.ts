@@ -17,6 +17,7 @@ import { VideosEducativosPage } from '../pages/videos-educativos/videos-educativ
 import { LoginPage } from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import { QRScanner } from '@ionic-native/qr-scanner';
+import { MapScanPage } from '../pages/map-scan/map-scan';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -37,7 +38,8 @@ import { RestStorage } from '../providers/rest/storage';
     TipsParaPlantarPage,
     VideosEducativosPage,
     LoginPage,
-    RegistroPage
+    RegistroPage,
+    MapScanPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { RestStorage } from '../providers/rest/storage';
     TipsParaPlantarPage,
     VideosEducativosPage,
     LoginPage,
-    RegistroPage
+    RegistroPage,
+    MapScanPage
   ],
   providers: [
     StatusBar,
