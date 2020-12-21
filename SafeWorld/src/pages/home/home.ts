@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ToastController } from 'ionic-angular';
 
+
 declare var google:any;
 
 @Component({
